@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <title>Weather Dashboard</title>
+
+      <!--  Add a "favicon" image to the Browser title tab.  -->
+      <link rel="icon" href="./assets/images/weather1.png"/>
+</head>
+
+<body class="flex-column min-100-vh">
+  <header class="hero">
+    <h1 class="app-title">Weather Dashboard
+      <img src="./assets/images/weather1.png" height="40" alt="weather icon"></img>
+    </h1>
+  </header>
+
+
+  <main class="flex-row justify-space-between">
+ 
+    <div class="col-3 col-md-3">
+      <!-- Create the page area for the 'city search' and 'city history' -->
+      <div class="card">     
+        <h5 class="card-header text-uppercase">Search for a City</h5>
+      
+        <form id="user-form" class="card-body">
+          <input name="City" id="city-form" type="text" autofocus="true" class="form-input" />
+          <button type="submit" class="btn">
+            <img src="./assets/images/search.png" height="35"></img>
+          </button>
+        </form>   
+      </div>
+
+      <!-- Setup the 'city history' area -->
+      <div class="card">
+        <h6 class="card-header text-uppercase">Previous City Searches</h6>
+      </div>
+    </div>
+
+
+    <!-- Setup the area where we display the weather information -->
+    <div class="row col-9 col-md-3">
+     <!-- Put the city summary here-->>
+    </div>
+
+    <div class="row col-9 col-md-3">
+      <!-- Area for the 5-day forecast here-->
+    </div>
+
+  </main>
+
+  <!-- Include the JavaScript file -->
+  <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
