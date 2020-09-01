@@ -29,23 +29,22 @@ var getCityWeather = function ( city ) {
     // Make the request.
     fetch(apiUrl)
         .then(function (response) {
+            
             if (response.ok) {
+                // Request was successful
                 response.json().then(function (data) {
-
-                    console.log(data);
+                    console.log( data );
                 });
-            }
-            else {
+            } else {
+                // Request was not successful
                 alert("Error: " + response.statusText);
             }
-
         })
         .catch(function (error) {
-            // Notice this '.catch()' is chained onto the end of the '.then()'
-            alert("Unable to connect to OpenWeather.");
+            // Notice this `.catch()` is chained onto the end of the `.then()` method
+            alert("Unable to connect to OpenWeather");
         });
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Define the function to the 'repo' information
