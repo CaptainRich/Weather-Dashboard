@@ -24,36 +24,54 @@
 
 
   <main class="flex-row justify-space-between">
- 
-    <div class="col-3 col-md-3">
-      <!-- Create the page area for the 'city search' and 'city history' -->
-      <div class="card">     
-        <h5 class="card-header text-uppercase">Search for a City</h5>
-      
-        <form id="user-form" class="card-body">
-          <input name="City" id="city-form" type="text" autofocus="true" class="form-input" />
-          <button type="submit" class="btn">
-            <img src="./assets/images/search.png" height="35"></img>
-          </button>
-        </form>   
+    <div class="container">
+      <div class="row">
+        <div class="col-4 ">
+          <!-- Create the page area for the 'city search' and 'city history' -->
+          <div class="card">
+            <h5 class="card-header text-uppercase">Search for a City<br>
+              <span class="h7">(Use: city, state, country)</span>
+            </h5>
+  
+            <form id="city-form" class="card-body">
+              <input name="cityname" id="cityname" type="text" autofocus="true" class="form-input" />
+              <button type="submit" class="btn">
+                <img src="./assets/images/search.png" height="35"></img>
+              </button>
+            </form>
+          </div>
+  
+          <!-- Setup the 'city history' area -->
+          <div class="card">
+            <h6 class="card-header text-uppercase">Previous City Searches</h6>
+          </div>
+        </div>
+  
+  
+        <!-- Setup the area where we display the weather information -->
+  
+        <div class="col-8 ">
+          <div class="row">
+            <!-- Put the city summary here-->
+            <h5>Current Weather</h5>
+            <p id="citytext"></p>
+            <p id="citylocation"></p>
+            <p id="temperature"></p>
+            <p id="humidity"></p>
+            <p id="wind"></p>
+            <p id="uv"></p>
+          </div>
+
+  
+
+          <div class="row">
+            <!-- Area for the 5-day forecast here-->
+            <h5 class="forecast">5-Day Forecast:</h5>
+          </div>
+        </div>
       </div>
-
-      <!-- Setup the 'city history' area -->
-      <div class="card">
-        <h6 class="card-header text-uppercase">Previous City Searches</h6>
-      </div>
     </div>
-
-
-    <!-- Setup the area where we display the weather information -->
-    <div class="row col-9 col-md-3">
-     <!-- Put the city summary here-->>
-    </div>
-
-    <div class="row col-9 col-md-3">
-      <!-- Area for the 5-day forecast here-->
-    </div>
-
+  
   </main>
 
   <!-- Include the JavaScript file -->
