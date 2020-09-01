@@ -9,6 +9,14 @@ var cityNameEl = document.querySelector( "#cityname" );
 ////////////////////////////////////////////////////////////////////////////////////////
 var getCityWeather = function ( city ) {
 
+    // Get the current date
+    var date = moment().format('L');
+
+    // Format the data we need from the response
+    var cityInfo = city.split(",");
+    var cityDisplayNameEl = document.querySelector( "#citytext" );
+    cityDisplayNameEl.textContent = cityInfo[0] + ", " + date;
+
     // Personal API Key for 'openweather.com'
     var apiKey = "4ac62930f02efe4befd5f739a4de35e6";
 
@@ -23,10 +31,7 @@ var getCityWeather = function ( city ) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    // Format the data we need from the response
-                    // var cityInfo = city.split(",");
-                    // var cityDisplayNameEl = document.querySelector( "#citytext" );
-                    // cityDisplayNameEl.textContent = cityInfo[0];
+
                     console.log(data);
                 });
             }
