@@ -4,6 +4,13 @@
 var userCitySearchEl  = document.querySelector( "#city-form" );
 var cityNameEl = document.querySelector( "#cityname" );
 
+// Variables for the daily weather information
+var weatherTemperature;
+var weatherHumidity;
+var weatherWindSpeed;
+var weatherUV;
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -16,12 +23,17 @@ var getCityWeather = function ( city ) {
     var cityInfo = city.split(",");
     var cityDisplayNameEl = document.querySelector( "#citytext" );
     cityDisplayNameEl.textContent = cityInfo[0] + ", " + date;
+    var cityLocationNameEl = document.querySelector( "#citylocation" );
+    cityLocationNameEl.textContent = cityInfo[1] + ", " + cityInfo[2];
 
     // Personal API Key for 'openweather.com'
     var apiKey = "4ac62930f02efe4befd5f739a4de35e6";
 
     // Format the 'Weather' API URL to obtain the current day's forecast.
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
+    //var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
+
+    // Format the 'UV' API URL.
+    var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=29.76&lon=-95.37&cnt=1";
 
     // Format the 'Weather API URL to obtain the 5-day forecast.
     // var apiUrl = "https://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
@@ -34,6 +46,9 @@ var getCityWeather = function ( city ) {
                 // Request was successful
                 response.json().then(function (data) {
                     console.log( data );
+                    weatherTemperature = data.main.temp;
+                    weatherHumidity = data.main.humidity;
+                    weatherWindSpeed = data.wind.speed;
                 });
             } else {
                 // Request was not successful
