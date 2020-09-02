@@ -9,6 +9,8 @@ var weatherTemperature;
 var weatherHumidity;
 var weatherWindSpeed;
 var weatherUV;
+var cityLat;
+var cityLong;
 
 
 
@@ -30,35 +32,75 @@ var getCityWeather = function ( city ) {
     var apiKey = "4ac62930f02efe4befd5f739a4de35e6";
 
     // Format the 'Weather' API URL to obtain the current day's forecast.
-    //var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
 
-    // Format the 'UV' API URL.
-    var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=29.76&lon=-95.37&cnt=1";
+
 
     // Format the 'Weather API URL to obtain the 5-day forecast.
     // var apiUrl = "https://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
  
-    // Make the request.
+    // Make the request for the current day's weather
     fetch(apiUrl)
         .then(function (response) {
             
             if (response.ok) {
                 // Request was successful
                 response.json().then(function (data) {
-                    console.log( data );
+                    console.log(data);
                     weatherTemperature = data.main.temp;
                     weatherHumidity = data.main.humidity;
                     weatherWindSpeed = data.wind.speed;
+                    cityLat = data.lat;
+                    cityLong = data.lon;
+
+                    // Put the data for today's weather on the page.
+                    var tempDisplayEl = document.querySelector("#temperature");
+                    tempDisplayEl.textContent = "Temperature: " + weatherTemperature;
+                    var humidDisplayEl = document.querySelector("#humidity");
+                    humidDisplayEl.textContent = "Humidity: " + weatherHumidity;
+                    var windDisplayEl = document.querySelector("#wind");
+                    windDisplayEl.textContent = "Wind Speed: " + weatherWindSpeed;
+
                 });
+                return( response );
             } else {
                 // Request was not successful
                 alert("Error: " + response.statusText);
-            }
+                return;
+            };
         })
+        .then(function (response) {
+
+            // since the above request worked, use the lat/long values to obtain the 'UV index'.
+            // Format the 'UV' API URL.
+            var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=29.76&lon=-95.37&cnt=1";
+
+            fetch(apiUrl)
+                .then(function (response) {
+
+                    if (response.ok) {
+                        // Request was successful
+                        response.json().then(function (data2) {
+                            console.log(data2);
+                            weatherUV = data2[0].value;
+
+                            // Put the data for UV on the page
+                            var uvDisplayEL = document.querySelector("#uv");
+                            uvDisplayEL.textContent = "UV Index: " + weatherUV;
+                        });
+                    };
+                })
+            })
         .catch(function (error) {
             // Notice this `.catch()` is chained onto the end of the `.then()` method
             alert("Unable to connect to OpenWeather");
+            return;
         });
+
+    
+
+
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
