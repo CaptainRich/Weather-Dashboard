@@ -21,18 +21,9 @@ var getCityWeather = function ( city ) {
     // Get the current date
     var date = moment().format('L');
 
-    // Format the data we need from the response
-    var cityInfo = city.split(",");
-    var cityDisplayNameEl = document.querySelector( "#citytext" );
-    cityDisplayNameEl.textContent = cityInfo[0] + ", " + date;
-    var cityLocationNameEl = document.querySelector( "#citylocation" );
-    if( !cityInfo[2] ) {
-        cityInfo[2] = " ";
-    }
-    else {
-        cityInfo[2] = ", " + cityInfo[2];
-    }
-    cityLocationNameEl.textContent = cityInfo[1] + cityInfo[2];
+    // Put the city name/date on the page
+    displayCityNameDate( city, date );
+
 
     // Personal API Key for 'openweather.com'
     var apiKey = "4ac62930f02efe4befd5f739a4de35e6";
@@ -53,41 +44,22 @@ var getCityWeather = function ( city ) {
                 // Request was successful
                 response.json().then(function (data) {
                     console.log(data);
-                    weatherTemperature = data.main.temp;
-                    weatherHumidity = data.main.humidity;
-                    weatherWindSpeed = data.wind.speed;
-                    cityLat = data.coord.lat;
-                    cityLong = data.coord.lon;
-
-                    // Put the data for today's weather on the page.
-                    var tempDisplayEl = document.querySelector("#temperature");
-                    var weatherString = "Temperature: " + weatherTemperature + " \xB0F";                 
-                    tempDisplayEl.textContent = weatherString;
-
-                    var humidDisplayEl = document.querySelector("#humidity");
-                    humidDisplayEl.textContent = "Humidity: " + weatherHumidity + " %";
-
-                    var windDisplayEl = document.querySelector("#wind");
-                    windDisplayEl.textContent = "Wind Speed: " + weatherWindSpeed + " MPH";
-
+                    displayToday( data );
                 });
-                return( response );
+
             } else {
                 // Request was not successful
                 alert("Error: " + response.statusText);
                 return;
             };
+            return response;
         })
         .then(function (response) {
 
-            while( !cityLat ) {
-
-            };
-            
             // since the above request worked, use the lat/long values to obtain the 'UV index'.
             // Format the 'UV' API URL.
-             var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + cityLat + "&lon=" + cityLon + "&cnt=1";
-            //var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=29.76&lon=-95.57&cnt=1";
+            //var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + cityLat + "&lon=" + cityLon + "&cnt=1";
+            var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=29.76&lon=-95.57&cnt=1";
 
             fetch(apiUrl)
                 .then(function (response) {
@@ -96,17 +68,11 @@ var getCityWeather = function ( city ) {
                         // Request was successful
                         response.json().then(function (data2) {
                             console.log(data2);
-                            weatherUV = data2[0].value;
-
-                            // Put the data for UV on the page
-                            var uvDisplayEL = document.querySelector("#uv");
-                            uvDisplayEL.textContent = "UV Index: " ;
-                            var uvDisplayValEl = document.querySelector("#uv-value");
-                            uvDisplayValEl.textContent = weatherUV ;
+                            displayUvValue( data2 );
                         });
                     };
                 })
-            })
+        })
         .catch(function (error) {
             // Notice this `.catch()` is chained onto the end of the `.then()` method
             alert("Unable to connect to OpenWeather");
@@ -117,6 +83,64 @@ var getCityWeather = function ( city ) {
 
 
 
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to put the city name and current date on the page
+var displayCityNameDate = function( city, date ) {
+
+    // Format the data we need from the response
+    var cityInfo = city.split(",");
+    var cityDisplayNameEl = document.querySelector( "#citytext" );
+    cityDisplayNameEl.textContent = cityInfo[0] + ", " + date;
+    var cityLocationNameEl = document.querySelector( "#citylocation" );
+    if( !cityInfo[2] ) {
+        cityInfo[2] = " ";
+    }
+    else {
+        cityInfo[2] = ", " + cityInfo[2];
+    }
+    cityLocationNameEl.textContent = cityInfo[1] + cityInfo[2];
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to put "today's" weather on the page
+var displayToday = function( data ) {
+
+    // Get the data we want from the JSON object.
+    weatherTemperature = data.main.temp;
+    weatherHumidity = data.main.humidity;
+    weatherWindSpeed = data.wind.speed;
+    cityLat = data.coord.lat;
+    cityLong = data.coord.lon;
+
+    // Put the data for today's weather on the page.
+    var tempDisplayEl = document.querySelector("#temperature");
+    var weatherString = "Temperature: " + weatherTemperature + " \xB0F";                 
+    tempDisplayEl.textContent = weatherString;
+
+    var humidDisplayEl = document.querySelector("#humidity");
+    humidDisplayEl.textContent = "Humidity: " + weatherHumidity + " %";
+
+    var windDisplayEl = document.querySelector("#wind");
+    windDisplayEl.textContent = "Wind Speed: " + weatherWindSpeed + " MPH";
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to put "today's" UV index on the page
+var displayUvValue = function( data2 ) {
+
+    // Get the value from the JSON object
+    weatherUV = data2[0].value;
+
+    // Put the data for UV on the page
+    var uvDisplayEL = document.querySelector("#uv");
+    uvDisplayEL.textContent = "UV Index: " ;
+    var uvDisplayValEl = document.querySelector("#uv-value");
+    uvDisplayValEl.textContent = weatherUV ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
