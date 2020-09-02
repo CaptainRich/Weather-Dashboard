@@ -55,11 +55,14 @@ var getCityWeather = function ( city ) {
 
                     // Put the data for today's weather on the page.
                     var tempDisplayEl = document.querySelector("#temperature");
-                    tempDisplayEl.textContent = "Temperature: " + weatherTemperature;
+                    var weatherString = "Temperature: " + weatherTemperature + " \xB0F";                 
+                    tempDisplayEl.textContent = weatherString;
+
                     var humidDisplayEl = document.querySelector("#humidity");
-                    humidDisplayEl.textContent = "Humidity: " + weatherHumidity;
+                    humidDisplayEl.textContent = "Humidity: " + weatherHumidity + " %";
+
                     var windDisplayEl = document.querySelector("#wind");
-                    windDisplayEl.textContent = "Wind Speed: " + weatherWindSpeed;
+                    windDisplayEl.textContent = "Wind Speed: " + weatherWindSpeed + " MPH";
 
                 });
                 return( response );
@@ -86,7 +89,9 @@ var getCityWeather = function ( city ) {
 
                             // Put the data for UV on the page
                             var uvDisplayEL = document.querySelector("#uv");
-                            uvDisplayEL.textContent = "UV Index: " + weatherUV;
+                            uvDisplayEL.textContent = "UV Index: " ;
+                            var uvDisplayValEl = document.querySelector("#uv-value");
+                            uvDisplayValEl.textContent = weatherUV ;
                         });
                     };
                 })

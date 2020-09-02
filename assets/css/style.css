@@ -25,6 +25,10 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.1em;
 }
 
+.currentday {
+  margin: 10px 0 10px 0;
+}
+
 .local1 {
   margin-bottom: 0;
   padding-bottom: 0;
@@ -44,9 +48,17 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1em;
 }
 
+.redwhite {
+  background-color: red;
+  color: white;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 
 h5, .forecast {
   font-weight: bold;
+  margin: 30px 0 10px 0;
 }
 
 h1 {
