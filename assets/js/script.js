@@ -26,7 +26,13 @@ var getCityWeather = function ( city ) {
     var cityDisplayNameEl = document.querySelector( "#citytext" );
     cityDisplayNameEl.textContent = cityInfo[0] + ", " + date;
     var cityLocationNameEl = document.querySelector( "#citylocation" );
-    cityLocationNameEl.textContent = cityInfo[1] + ", " + cityInfo[2];
+    if( !cityInfo[2] ) {
+        cityInfo[2] = " ";
+    }
+    else {
+        cityInfo[2] = ", " + cityInfo[2];
+    }
+    cityLocationNameEl.textContent = cityInfo[1] + cityInfo[2];
 
     // Personal API Key for 'openweather.com'
     var apiKey = "4ac62930f02efe4befd5f739a4de35e6";
@@ -50,8 +56,8 @@ var getCityWeather = function ( city ) {
                     weatherTemperature = data.main.temp;
                     weatherHumidity = data.main.humidity;
                     weatherWindSpeed = data.wind.speed;
-                    cityLat = data.lat;
-                    cityLong = data.lon;
+                    cityLat = data.coord.lat;
+                    cityLong = data.coord.lon;
 
                     // Put the data for today's weather on the page.
                     var tempDisplayEl = document.querySelector("#temperature");
@@ -74,9 +80,14 @@ var getCityWeather = function ( city ) {
         })
         .then(function (response) {
 
+            while( !cityLat ) {
+
+            };
+            
             // since the above request worked, use the lat/long values to obtain the 'UV index'.
             // Format the 'UV' API URL.
-            var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=29.76&lon=-95.37&cnt=1";
+             var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + cityLat + "&lon=" + cityLon + "&cnt=1";
+            //var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=29.76&lon=-95.57&cnt=1";
 
             fetch(apiUrl)
                 .then(function (response) {

@@ -75,7 +75,15 @@ h1 {
   justify-content: left;
 }
 
+.card-header {
+  padding-top: 0;
+  margin-top: 10px;
+}
 
+.previous {
+  padding-bottom: 3px;
+  margin-bottom: 0px;
+}
 /* General list style */
 ul.list-group {
   min-height: 130px;
