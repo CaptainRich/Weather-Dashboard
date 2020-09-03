@@ -7,8 +7,8 @@ body {
 }
 
 .row {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 
@@ -84,8 +84,26 @@ h1 {
   padding-bottom: 3px;
   margin-bottom: 0px;
 }
+
+.daycard {
+  background-color: blue;
+  color: white;
+  padding-left: 0;
+  min-width: 15%;
+  justify-content: left;
+  text-align: left;
+  font-size: .7em;
+}
+
+
 /* General list style */
 ul.list-group {
   min-height: 130px;
+}
+
+.daycard, ul {
+  list-style-type: none;
+  justify-content: left;
+  text-align: left;
 }
 

@@ -33,18 +33,17 @@ var getCityWeather = function ( city ) {
 
 
 
-    // Format the 'Weather API URL to obtain the 5-day forecast.
-    // var apiUrl = "https://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
+
  
     // Make the request for the current day's weather
     fetch(apiUrl)
         .then(function (response) {
-            
+
             if (response.ok) {
                 // Request was successful
                 response.json().then(function (data) {
-                    console.log(data);
-                    displayToday( data );
+                    //console.log(data);
+                    displayToday(data);
                 });
 
             } else {
@@ -67,8 +66,8 @@ var getCityWeather = function ( city ) {
                     if (response.ok) {
                         // Request was successful
                         response.json().then(function (data2) {
-                            console.log(data2);
-                            displayUvValue( data2 );
+                            //console.log(data2);
+                            displayUvValue(data2);
                         });
                     };
                 })
@@ -79,8 +78,32 @@ var getCityWeather = function ( city ) {
             return;
         });
 
-    
+    // Format the 'Weather API URL to obtain the 5-day forecast.
+    var apiUrl2 = "https://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
 
+    // Make the request for the current day's weather
+    fetch(apiUrl2)
+        .then(function (response) {
+
+            if (response.ok) {
+                // Request was successful
+                response.json().then(function (data) {
+                    //console.log(data);
+                     console.log(data.list[2]);
+                    // console.log(data.list[10]);
+                    // console.log(data.list[18]);
+                    // console.log(data.list[26]);
+                    // console.log(data.list[34]);
+                    display5Days(data);
+                });
+
+            } else {
+                // Request was not successful
+                alert("Error: " + response.statusText);
+                return;
+            };
+            return response;
+        })
 
 
 }
@@ -141,6 +164,56 @@ var displayUvValue = function( data2 ) {
     uvDisplayEL.textContent = "UV Index: " ;
     var uvDisplayValEl = document.querySelector("#uv-value");
     uvDisplayValEl.textContent = weatherUV ;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to display the weather for the next 5 days.
+var display5Days = function( data ) {
+
+    // "data" is a list of 40 items, the weather for 5 days every 3 hours.
+    // Display the weather information at noon each day, "list" locations
+    // 2, 10, 18, 26, and 34.
+
+    // Generic 'li' element.
+    var genericLi;
+
+    // Generic 'date' element
+    var dateDisplay2;
+    
+    // Display the data for the 1st day.
+    var dateDisplay1 = document.querySelector("#day1");
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[2].dt_txt.split(" ");
+    genericLi.textContent = dateDisplay2[0];
+    dateDisplay1.appendChild(genericLi);
+
+    // Display the data for the 2nd day.
+    var dateDisplay1 = document.querySelector("#day2");
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[10].dt_txt.split(" ");
+    genericLi.textContent = dateDisplay2[0];
+    dateDisplay1.appendChild(genericLi);
+
+    // Display the data for the 3rd day.
+    var dateDisplay1 = document.querySelector("#day3");
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[18].dt_txt.split(" ");
+    genericLi.textContent = dateDisplay2[0];
+    dateDisplay1.appendChild(genericLi);
+
+    // Display the data for the 4th day.
+    var dateDisplay1 = document.querySelector("#day4");
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[26].dt_txt.split(" ");
+    genericLi.textContent = dateDisplay2[0];
+    dateDisplay1.appendChild(genericLi);
+    
+    // Display the data for the 5th day.
+    var dateDisplay1 = document.querySelector("#day5");
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[34].dt_txt.split(" ");
+    genericLi.textContent = dateDisplay2[0];
+    dateDisplay1.appendChild(genericLi);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
