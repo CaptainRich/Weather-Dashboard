@@ -88,8 +88,8 @@ var getCityWeather = function ( city ) {
             if (response.ok) {
                 // Request was successful
                 response.json().then(function (data) {
-                    //console.log(data);
-                     console.log(data.list[2]);
+                    console.log(data);
+                    //console.log(data.list[2]);
                     // console.log(data.list[10]);
                     // console.log(data.list[18]);
                     // console.log(data.list[26]);
@@ -174,6 +174,18 @@ var display5Days = function( data ) {
     // Display the weather information at noon each day, "list" locations
     // 2, 10, 18, 26, and 34.
 
+    showDayInfo( "#day1", data, 2 )    // display 1st day, pass in ID and weather index
+    showDayInfo( "#day2", data, 10 )   // display 2nd day, pass in ID and weather index
+    showDayInfo( "#day3", data, 18 )   // display 3rd day, pass in ID and weather index
+    showDayInfo( "#day4", data, 26 )   // display 4th day, pass in ID and weather index
+    showDayInfo( "#day5", data, 34 )   // display 5th day, pass in ID and weather index
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to show the forecast data for a single future day.
+var showDayInfo = function( ulId, data, weatherIndex ) {
     // Generic 'li' element.
     var genericLi;
 
@@ -186,115 +198,42 @@ var display5Days = function( data ) {
   
     
     // ************************************************
-    // Display the data for the 1st day.
-     dateDisplay1 = document.querySelector("#day1");
+    // Display the data for the indicated day.
+     dateDisplay1 = document.querySelector( ulId );
+
     // Display the date
     genericLi = document.createElement("li");
-    dateDisplay2 = data.list[2].dt_txt.split(" ");
+    dateDisplay2 = data.list[weatherIndex].dt_txt.split(" ");
     genericLi.textContent = dateDisplay2[0];
     dateDisplay1.appendChild(genericLi);
+
     // Display the weather icon
     genericLi = document.createElement("li");
-    dateDisplay2 = data.list[2].weather[0].icon;
+    dateDisplay2 = data.list[weatherIndex].weather[0].icon;
     imgDisplay = document.createElement( "img" );
     iconDisplay = iconDisplayUrl + dateDisplay2 + "@2x.png";
     imgDisplay.setAttribute( "src", iconDisplay );
     genericLi.appendChild( imgDisplay );
     dateDisplay1.appendChild(genericLi);
+
+    // Display the weather description
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[weatherIndex].weather[0].description;
+    genericLi.textContent = "Looks like: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
+
     // Display the temperature
     genericLi = document.createElement("li");
-    dateDisplay2 = data.list[2].main.temp;
-    genericLi.textContent = "Temperature: " + dateDisplay2;
+    dateDisplay2 = data.list[weatherIndex].main.temp;
+    genericLi.textContent = "Temperature: " + dateDisplay2 + " \xB0F";
     dateDisplay1.appendChild(genericLi);
+
     // Display the humidity
     genericLi = document.createElement("li");
-    dateDisplay2 = data.list[2].main.humidity;
+    dateDisplay2 = data.list[weatherIndex].main.humidity;
     genericLi.textContent = "Humidity: " + dateDisplay2;
     dateDisplay1.appendChild(genericLi);
 
-
-    // ************************************************
-    // Display the data for the 2nd day.
-    dateDisplay1 = document.querySelector("#day2");
-    // Display the date
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[10].dt_txt.split(" ");
-    genericLi.textContent = dateDisplay2[0];
-    dateDisplay1.appendChild(genericLi);
-    // Display the weather icon
-    // Display the temperature
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[10].main.temp;
-    genericLi.textContent = "Temperature: " + dateDisplay2;
-    dateDisplay1.appendChild(genericLi);
-    // Display the humidity
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[10].main.humidity;
-    genericLi.textContent = "Humidity: " + dateDisplay2;
-    dateDisplay1.appendChild(genericLi);
-
-
-    // ************************************************
-    // Display the data for the 3rd day.
-    dateDisplay1 = document.querySelector("#day3");
-    // Display the date
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[18].dt_txt.split(" ");
-    genericLi.textContent = dateDisplay2[0];
-    dateDisplay1.appendChild(genericLi);
-    // Display the weather icon
-    // Display the temperature
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[18].main.temp;
-    genericLi.textContent = "Temperature: " + dateDisplay2;
-    dateDisplay1.appendChild(genericLi);
-    // Display the humidity
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[18].main.humidity;
-    genericLi.textContent = "Humidity: " + dateDisplay2;
-    dateDisplay1.appendChild(genericLi);
-
-    
-    // ************************************************
-    // Display the data for the 4th day.
-    dateDisplay1 = document.querySelector("#day4");
-    // Display the date
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[26].dt_txt.split(" ");
-    genericLi.textContent = dateDisplay2[0];
-    dateDisplay1.appendChild(genericLi);
-    // Display the weather icon
-    // Display the temperature
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[26].main.temp;
-    genericLi.textContent = "Temperature: " + dateDisplay2;
-    dateDisplay1.appendChild(genericLi);
-    // Display the humidity
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[26].main.humidity;
-    genericLi.textContent = "Humidity: " + dateDisplay2;
-    dateDisplay1.appendChild(genericLi);
- 
-    
-    // ************************************************
-    // Display the data for the 5th day.
-    dateDisplay1 = document.querySelector("#day5");
-    // Display the date
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[34].dt_txt.split(" ");
-    genericLi.textContent = dateDisplay2[0];
-    dateDisplay1.appendChild(genericLi);
-    // Display the weather icon
-    // Display the temperature
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[34].main.temp;
-    genericLi.textContent = "Temperature: " + dateDisplay2;
-    dateDisplay1.appendChild(genericLi);
-    // Display the humidity
-    genericLi = document.createElement("li");
-    dateDisplay2 = data.list[34].main.humidity;
-    genericLi.textContent = "Humidity: " + dateDisplay2;
-    dateDisplay1.appendChild(genericLi);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
