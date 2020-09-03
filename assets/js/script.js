@@ -177,42 +177,123 @@ var display5Days = function( data ) {
     // Generic 'li' element.
     var genericLi;
 
-    // Generic 'date' element
+    // Generic display elements
+    var dateDisplay1;
     var dateDisplay2;
+    var imgDisplay;
+    var iconDisplayUrl = "http://openweathermap.org/img/wn/";
+    var iconDisplay;
+  
     
+    // ************************************************
     // Display the data for the 1st day.
-    var dateDisplay1 = document.querySelector("#day1");
+     dateDisplay1 = document.querySelector("#day1");
+    // Display the date
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[2].dt_txt.split(" ");
     genericLi.textContent = dateDisplay2[0];
     dateDisplay1.appendChild(genericLi);
+    // Display the weather icon
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[2].weather[0].icon;
+    imgDisplay = document.createElement( "img" );
+    iconDisplay = iconDisplayUrl + dateDisplay2 + "@2x.png";
+    imgDisplay.setAttribute( "src", iconDisplay );
+    genericLi.appendChild( imgDisplay );
+    dateDisplay1.appendChild(genericLi);
+    // Display the temperature
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[2].main.temp;
+    genericLi.textContent = "Temperature: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
+    // Display the humidity
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[2].main.humidity;
+    genericLi.textContent = "Humidity: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
 
+
+    // ************************************************
     // Display the data for the 2nd day.
-    var dateDisplay1 = document.querySelector("#day2");
+    dateDisplay1 = document.querySelector("#day2");
+    // Display the date
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[10].dt_txt.split(" ");
     genericLi.textContent = dateDisplay2[0];
     dateDisplay1.appendChild(genericLi);
+    // Display the weather icon
+    // Display the temperature
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[10].main.temp;
+    genericLi.textContent = "Temperature: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
+    // Display the humidity
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[10].main.humidity;
+    genericLi.textContent = "Humidity: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
 
+
+    // ************************************************
     // Display the data for the 3rd day.
-    var dateDisplay1 = document.querySelector("#day3");
+    dateDisplay1 = document.querySelector("#day3");
+    // Display the date
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[18].dt_txt.split(" ");
     genericLi.textContent = dateDisplay2[0];
     dateDisplay1.appendChild(genericLi);
+    // Display the weather icon
+    // Display the temperature
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[18].main.temp;
+    genericLi.textContent = "Temperature: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
+    // Display the humidity
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[18].main.humidity;
+    genericLi.textContent = "Humidity: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
 
+    
+    // ************************************************
     // Display the data for the 4th day.
-    var dateDisplay1 = document.querySelector("#day4");
+    dateDisplay1 = document.querySelector("#day4");
+    // Display the date
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[26].dt_txt.split(" ");
     genericLi.textContent = dateDisplay2[0];
     dateDisplay1.appendChild(genericLi);
+    // Display the weather icon
+    // Display the temperature
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[26].main.temp;
+    genericLi.textContent = "Temperature: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
+    // Display the humidity
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[26].main.humidity;
+    genericLi.textContent = "Humidity: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
+ 
     
+    // ************************************************
     // Display the data for the 5th day.
-    var dateDisplay1 = document.querySelector("#day5");
+    dateDisplay1 = document.querySelector("#day5");
+    // Display the date
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[34].dt_txt.split(" ");
     genericLi.textContent = dateDisplay2[0];
+    dateDisplay1.appendChild(genericLi);
+    // Display the weather icon
+    // Display the temperature
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[34].main.temp;
+    genericLi.textContent = "Temperature: " + dateDisplay2;
+    dateDisplay1.appendChild(genericLi);
+    // Display the humidity
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[34].main.humidity;
+    genericLi.textContent = "Humidity: " + dateDisplay2;
     dateDisplay1.appendChild(genericLi);
 }
 
