@@ -111,6 +111,11 @@ var displayCityNameDate = function( city, date ) {
         cityInfo[2] = ", " + cityInfo[2];
     }
     cityLocationNameEl.textContent = cityInfo[1] + cityInfo[2];
+
+    // Put this city (search string) in the list of previously searched locations.
+    // If there are more than 10 locations, push them down and put this one at
+    // the top of the list.  Also, if the current city is already in the list, 
+    // don't alter the list.
 }
 
 
@@ -334,7 +339,6 @@ var formSubmitHandler = function( event ) {
 
     // Get the requested user name from the form
     var searchCity = cityNameEl.value.trim();
-    console.log( searchCity );
 
     if( searchCity ) {
         getCityWeather( searchCity );
