@@ -11,6 +11,7 @@ var weatherWindSpeed;
 var weatherUV;
 var cityLat;
 var cityLong;
+var numPreviousCities;
 
 
 
@@ -368,3 +369,10 @@ userCitySearchEl.addEventListener( "submit", formSubmitHandler );
 
 // Event listener for the language buttons.
 //languageButtonsEl.addEventListener( "click", buttonClickHandler );
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// When things start off, initialize the number of previously searched cities and try
+// to load data from local storage.
+
+numPreviousCities = 0;
