@@ -12,6 +12,7 @@ var weatherUV;
 var cityLat;
 var cityLong;
 var numPreviousCities;
+var previousCities = [10];
 
 
 
@@ -116,6 +117,8 @@ var displayCityNameDate = function( city, date ) {
     // If there are more than 10 locations, push them down and put this one at
     // the top of the list.  Also, if the current city is already in the list, 
     // don't alter the list.
+
+    pushCity( city );
 }
 
 
@@ -252,6 +255,77 @@ var empty5Days = function() {
 
     ulItem = document.querySelector( "#day5" );
     ulItem.innerHTML = '' ;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to maintain the list of 'previous' cities, both in the data array and on the page.
+var pushCity = function( city ) {
+
+    // Based on the number of cities in the list, make sure the current 'city' is not
+    // already in the list.
+
+    // Make sure our city name string is upper case, with no white space
+    var localCity = city.toUpperCase().trim();
+
+    for( var i = 0; i < numPreviousCities; i++ ) {
+        if( localCity === previousCities[i] ) {
+            // This city is already in the list, don't add it.
+            return;
+        }
+    }
+
+    // We have a new city to add.  Push the list down, add the new city
+    // and bump the counter.
+    for( j = 9; j > 0; j-- ) {
+        previousCities[j] = previousCities[j-1];
+    }
+
+    previousCities[0] = localCity;
+    numPreviousCities = Math.min( 10, ++numPreviousCities );
+
+    // Update the city list on the page and save to local Storage.
+
+    updateCityList();
+    saveCityList();
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to update the HTML page with the city list
+var updateCityList = function() {
+
+    var idValue;
+    var displayItem;
+
+    // Loop over the number of cities and update the list on the page
+    for( var i = 0; i < numPreviousCities; i++ ) {
+        idValue = "p" + i;
+        displayItem = document.getElementById( idValue );
+        displayItem.innerHTML = previousCities[i];
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to save the cities searched to local storage.
+var saveCityList = function() {
+
+    // Save the count of previously searched cities
+    localStorage.setItem( "cityCount", numPreviousCities );
+
+    // Save the array of previously searched cities
+    localStorage.setItem( "citiesForecast", previousCities );
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to load the cities searched from local storage.
+var retrieveCityList = function() {
+
+    // Retrieve the count of the previously searched cities
+    numPreviousCities = localStorage.getItem( "cityCount" );
+
+    // Retrieve the array of previously searched cities
+    previousCities = localStorage.getItem( "citiesForecast" );
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
