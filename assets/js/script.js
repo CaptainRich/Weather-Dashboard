@@ -154,6 +154,11 @@ var displayUvValue = function( data2 ) {
 // Function to display the weather for the next 5 days.
 var display5Days = function( data ) {
 
+    // There could already be a forecast on the page, this needs to be removed
+    // before we append the current city's forecast.
+
+    empty5Days();
+
     // "data" is a list of 40 items, the weather for 5 days every 3 hours.
     // Display the weather information at noon each day, "list" locations
     // 2, 10, 18, 26, and 34.
@@ -218,6 +223,29 @@ var showDayInfo = function( ulId, data, weatherIndex ) {
     genericLi.textContent = "Humidity: " + dateDisplay2;
     dateDisplay1.appendChild(genericLi);
 
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+// Function to clear out an existing 5-day forecast
+var empty5Days = function() {
+
+    var ulItem;
+
+    // Point to each <ul></ul> item, and delete its content
+    ulItem = document.querySelector( "#day1" );  
+    ulItem.innerHTML = '' ;
+
+    ulItem = document.querySelector( "#day2" );
+    ulItem.innerHTML = '' ;
+
+    ulItem = document.querySelector( "#day3" );
+    ulItem.innerHTML = '' ;
+
+    ulItem = document.querySelector( "#day4" );
+    ulItem.innerHTML = '' ;
+
+    ulItem = document.querySelector( "#day5" );
+    ulItem.innerHTML = '' ;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
