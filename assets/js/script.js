@@ -39,38 +39,28 @@ var getCityWeather = function ( city ) {
     fetch(apiUrl)
         .then(function (response) {
 
-            if (response.ok) {
-                // Request was successful
-                response.json().then(function (data) {
-                    //console.log(data);
-                    displayToday(data);
-                });
-
-            } else {
-                // Request was not successful
-                alert("Error: " + response.statusText);
-                return;
-            };
-            return response;
+            return response.json();
         })
         .then(function (response) {
+ 
+            displayToday( response );
+
+            cityLat = response.coord.lat;  // need to set these here because of the asynchronous nature of 'fetch'
+            cityLon = response.coord.lon;
 
             // since the above request worked, use the lat/long values to obtain the 'UV index'.
             // Format the 'UV' API URL.
-            //var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + cityLat + "&lon=" + cityLon + "&cnt=1";
-            var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=29.76&lon=-95.57&cnt=1";
+            var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + cityLat + "&lon=" + cityLon + "&cnt=1";
 
-            fetch(apiUrl)
-                .then(function (response) {
-
-                    if (response.ok) {
-                        // Request was successful
-                        response.json().then(function (data2) {
-                            //console.log(data2);
-                            displayUvValue(data2);
-                        });
-                    };
-                })
+            return fetch(apiUrl)
+ 
+        })
+        .then( function( response ) {
+            return response.json();
+        })
+        .then( function(response) {
+            console.log( response );
+            displayUvValue(response);
         })
         .catch(function (error) {
             // Notice this `.catch()` is chained onto the end of the `.then()` method
@@ -88,12 +78,7 @@ var getCityWeather = function ( city ) {
             if (response.ok) {
                 // Request was successful
                 response.json().then(function (data) {
-                    console.log(data);
-                    //console.log(data.list[2]);
-                    // console.log(data.list[10]);
-                    // console.log(data.list[18]);
-                    // console.log(data.list[26]);
-                    // console.log(data.list[34]);
+
                     display5Days(data);
                 });
 
@@ -131,13 +116,12 @@ var displayCityNameDate = function( city, date ) {
 ////////////////////////////////////////////////////////////////////////////////////////
 // Function to put "today's" weather on the page
 var displayToday = function( data ) {
+    
 
     // Get the data we want from the JSON object.
     weatherTemperature = data.main.temp;
     weatherHumidity = data.main.humidity;
     weatherWindSpeed = data.wind.speed;
-    cityLat = data.coord.lat;
-    cityLong = data.coord.lon;
 
     // Put the data for today's weather on the page.
     var tempDisplayEl = document.querySelector("#temperature");
