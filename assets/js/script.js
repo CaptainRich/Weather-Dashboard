@@ -31,7 +31,7 @@ var getCityWeather = function ( city ) {
     var apiKey = "4ac62930f02efe4befd5f739a4de35e6";
 
     // Format the 'Weather' API URL to obtain the current day's forecast.
-    var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
 
 
 
@@ -54,7 +54,7 @@ var getCityWeather = function ( city ) {
 
             // since the above request worked, use the lat/long values to obtain the 'UV index'.
             // Format the 'UV' API URL.
-            var apiUrl = "http://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + cityLat + "&lon=" + cityLon + "&cnt=1";
+            var apiUrl = "https://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + cityLat + "&lon=" + cityLon + "&cnt=1";
 
             return fetch(apiUrl)
  
@@ -63,8 +63,7 @@ var getCityWeather = function ( city ) {
             return response.json();
         })
         .then( function(response) {
-            console.log( response );
-            displayUvValue(response);
+             displayUvValue(response);
         })
         .catch(function (error) {
             // Notice this `.catch()` is chained onto the end of the `.then()` method
@@ -73,7 +72,7 @@ var getCityWeather = function ( city ) {
         });
 
     // Format the 'Weather API URL to obtain the 5-day forecast.
-    var apiUrl2 = "http://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
+    var apiUrl2 = "https://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
 
     // Make the request for the current day's weather
     fetch(apiUrl2)
