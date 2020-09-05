@@ -5,10 +5,9 @@ var userCitySearchEl  = document.querySelector( "#city-form" );
 var cityNameEl = document.querySelector( "#cityname" );
 
 // Variable for the click handler on city name stack.
-// Variables for the 'language buttons'
 var cityButtonsEl = document.querySelector( "#previous-cities" );
 
-// Variables for the daily weather information
+// Variables for the daily weather and display information
 var weatherTemperature;
 var weatherHumidity;
 var weatherWindSpeed;
@@ -27,23 +26,12 @@ var getCityWeather = function ( city ) {
     // Get the current date
     var date = moment().format('L');
 
-    // Put the city name/date on the page
-    displayCityNameDate( city, date );
-
-    // Break up the city name into its components so we can build the search string.
-    // var cityParts = city.split(",");
-    // var searchString = "{" + cityParts[0] + "}";  // we'll always have at least this much
-
-    // for( var i = 1; i < cityParts.length; i++ ) {
-    //     searchString = searchString + ",{" + cityParts[i] + "}";
-    // }
-
-
+ 
     // Personal API Key for 'openweather.com'
     var apiKey = "4ac62930f02efe4befd5f739a4de35e6";
 
     // Format the 'Weather' API URL to obtain the current day's forecast.
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
+    var apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
 
 
 
@@ -57,6 +45,8 @@ var getCityWeather = function ( city ) {
         })
         .then(function (response) {
  
+            // Put the city name/date on the page, then the day's weather
+            displayCityNameDate( city, date );
             displayToday( response );
 
             cityLat = response.coord.lat;  // need to set these here because of the asynchronous nature of 'fetch'
@@ -83,7 +73,7 @@ var getCityWeather = function ( city ) {
         });
 
     // Format the 'Weather API URL to obtain the 5-day forecast.
-    var apiUrl2 = "https://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
+    var apiUrl2 = "http://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
 
     // Make the request for the current day's weather
     fetch(apiUrl2)
@@ -104,7 +94,6 @@ var getCityWeather = function ( city ) {
             return response;
         })
 
-
 }
 
 
@@ -117,12 +106,21 @@ var displayCityNameDate = function( city, date ) {
     var cityDisplayNameEl = document.querySelector( "#citytext" );
     cityDisplayNameEl.textContent = cityInfo[0] + ", " + date;
     var cityLocationNameEl = document.querySelector( "#citylocation" );
+
+    // If the 3rd part of the location wasn't specified, set it to a blank.
     if( !cityInfo[2] ) {
         cityInfo[2] = " ";
     }
     else {
         cityInfo[2] = ", " + cityInfo[2];
     }
+    
+    // If the 2nd part of the location wasn't specified, set it to a blank.
+    if( !cityInfo[1] ) {
+        cityInfo[1] = " ";
+    }
+
+
     cityLocationNameEl.textContent = cityInfo[1] + cityInfo[2];
 
     // Put this city (search string) in the list of previously searched locations.
@@ -141,8 +139,8 @@ var displayToday = function( data ) {
 
     // Get the data we want from the JSON object.
     weatherTemperature = data.main.temp;
-    weatherHumidity = data.main.humidity;
-    weatherWindSpeed = data.wind.speed;
+    weatherHumidity    = data.main.humidity;
+    weatherWindSpeed   = data.wind.speed;
 
     // Put the data for today's weather on the page.
     var tempDisplayEl = document.querySelector("#temperature");
@@ -293,7 +291,7 @@ var pushCity = function( city ) {
     }
 
     // We have a new city to add.  Push the list down, add the new city
-    // and bump the counter.
+    // and bump the counter.  Note the limit is ten cities.
     var maxIndex = Math.min(10, numPreviousCities);
     
     if (maxIndex) {
@@ -380,7 +378,7 @@ var retrieveCityList = function() {
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////// ** Event Handler ** //////////////////////////////////////////
 // Define the event handlers needed.
 
 // The event handler for the form submit button
@@ -404,7 +402,7 @@ var formSubmitHandler = function( event ) {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+/////////////// ** Event Handler ** //////////////////////////////////////////
 // The event handler for the cities in the display stack.  Each city name is 
 // a button that can be clicked.
 
