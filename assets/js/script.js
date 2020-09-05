@@ -278,7 +278,10 @@ var pushCity = function( city ) {
     // We have a new city to add.  Push the list down, add the new city
     // and bump the counter.
     var maxIndex = Math.min(10, numPreviousCities);
+    
     if (maxIndex) {
+        // If we have cities, push them down in the stack.  The oldest one
+        // will fall out of the bottom.
         for (var j = maxIndex; j > 0; j--) {
             previousCities[j] = previousCities[j - 1];
         }
@@ -321,7 +324,13 @@ var saveCityList = function() {
     localStorage.setItem( "cityCount", numPreviousCities );
 
     // Save the array of previously searched cities
-    localStorage.setItem( "citiesForecast", previousCities );
+    if (numPreviousCities > 0) {
+        var key;
+        for (var i = 0; i < numPreviousCities; i++) {
+            key = "citiesForecast" + i;
+            localStorage.setItem(key, previousCities[i] );
+        }
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -331,8 +340,18 @@ var retrieveCityList = function() {
     // Retrieve the count of the previously searched cities
     numPreviousCities = localStorage.getItem( "cityCount" );
 
-    // Retrieve the array of previously searched cities
-    previousCities = localStorage.getItem( "citiesForecast" );
+    // Retrieve the array of previously searched cities, if it exists.
+    if( numPreviousCities > 0 ) {
+        var key;
+        for( var i = 0; i < numPreviousCities; i++ ) {
+            key = "citiesForecast" + i;
+            previousCities[i] = localStorage.getItem( key );
+        }
+    }
+    else {
+        numPreviousCities = 0;
+        previousCities = [];
+    }
 
     // Now put the data on the HTML page, if necessary.
     if( numPreviousCities > 0 ) {

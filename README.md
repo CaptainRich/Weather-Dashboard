@@ -37,7 +37,15 @@ The deployment link to display the updated web page is:
 
 ## Weather Dashboard Logic
 
-1) 
+1) The 'openweathermap' API is used to obtain the weather information for the specified city.
+2) For each city specified, the specified location string is saved to a 'stack' for display as well as local storage.
+3) On a restart or page refresh, the previously evaluated cities are retrieved from local storage, the 'stack' is reconstructed, and these cities are displayed for subsequent review.
+4) The 'stack' is sized to 10 members.  If an 11th city is specified, the city at the bottom of the stack simply falls out the bottom.
+
+5) For the selected/specified city:
+a) The weather for the current day is obtained (from the API) and displayed.
+b) The latitude and longitude from this 'API request' is used to implement an additional 'API endpoint' to obtain the 5-day forecast.
+c) The 5-day forecast is displayed in panels, below the weather details for the current day.
 
 
 ## Application Screen Shot
