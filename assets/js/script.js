@@ -4,6 +4,10 @@
 var userCitySearchEl  = document.querySelector( "#city-form" );
 var cityNameEl = document.querySelector( "#cityname" );
 
+// Variable for the click handler on city name stack.
+// Variables for the 'language buttons'
+var cityButtonsEl = document.querySelector( "#previous-cities" );
+
 // Variables for the daily weather information
 var weatherTemperature;
 var weatherHumidity;
@@ -193,6 +197,8 @@ var showDayInfo = function( ulId, data, weatherIndex ) {
     var imgDisplay;
     var iconDisplayUrl = "http://openweathermap.org/img/wn/";
     var iconDisplay;
+    var usDate;
+    var showDate;
   
     
     // ************************************************
@@ -202,7 +208,10 @@ var showDayInfo = function( ulId, data, weatherIndex ) {
     // Display the date
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[weatherIndex].dt_txt.split(" ");
-    genericLi.textContent = dateDisplay2[0];
+    // Put the date in usual 'US' format
+    usDate = dateDisplay2[0].split("-");
+    showDate = usDate[1] + "-" + usDate[2] + "-" + usDate[0];
+    genericLi.textContent = showDate;
     dateDisplay1.appendChild(genericLi);
 
     // Display the weather icon
@@ -309,10 +318,12 @@ var updateCityList = function() {
     }
 
     // Loop over the number of cities and update the list on the page
+    var attributeName;
     for( var i = 0; i < numPreviousCities; i++ ) {
         idValue = "p" + i;
         displayItem = document.getElementById( idValue );
         displayItem.innerHTML = previousCities[i];
+        displayItem.setAttribute( "previous", previousCities[i] );
     }
 }
 
@@ -360,81 +371,6 @@ var retrieveCityList = function() {
 
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
-// Define the function to the 'repo' information
-// var displayRepos = function( repos, searchTerm ) {
-
-//     // Check if the API returned any 'repos'
-//     if( repos.length === 0 ) {
-//         repoContainerEl.textContent = "No repositories found for this user." ;
-//         return;
-//     }
-
-//     // Clear out any earlier displayed data
-//     repoContainerEl.textContent = "";
-//     repoSearchTerm.textContent  = searchTerm;
-
-//     // Display the repository data on the page.
-//     // Loop over the discovered 'repos'.
-//     for( i = 0; i < repos.length; i++ ) {
-//         // Format the 'repo' name
-//         var repoName = repos[i].owner.login + "/" + repos[i].name;
-
-//         // Create the container for this 'repo'.
-//         var repoEl = document.createElement( "a" );
-//         repoEl.classList = "list-item flex-row justify-space-between align-center";
-//         // Link the next HTML page and sends it the selected 'repo' name.
-//         repoEl.setAttribute( "href", "./single-repo.html?repo=" + repoName );   
-
-//         // Create a span element to hold the 'repo' name
-//         var titleEl = document.createElement( "span" );
-//         titleEl.textContent = repoName;
-
-//         // Append the element to the container
-//         repoEl.appendChild( titleEl );
-
-//         // Now create the status element for 'repo issues'
-//         var statusEl = document.createElement( "span" );
-//         statusEl.classList = "flex-row align-center";
-
-//         // See if the repo has any issues
-//         if( repos[i].open_issues_count > 0 ) {
-//             statusEl.innerHTML = 
-//             "<i class='fas fa-times status-icon icon-danger'></i>" + repos[i].open_issues_count + " issue(s)";
-//         }
-//         else {
-//             statusEl.innerHTML = "<i class='fas fa-check-square status-icon icon-success'></i>";
-//         }
-
-//         // Append the status to the container
-//         repoEl.appendChild( statusEl );
-
-
-//         // Append the container to the DOM
-//         repoContainerEl.appendChild( repoEl );
-//     }
-
-//     console.log( repos );
-//     console.log( searchTerm );
-// }
-
-
-////////////////////////////////////////////////////////////////////////////////////////
-// Function to search GitHub based on language features.
-// var getFeaturedRepos = function( language ) {
-//     var apiUrl = "https://api.github.com/search/repositories?q=" + language + "+is:featured&sort=help-wanted-issues";
-
-//     fetch( apiUrl ).then( function( response ) {
-//         if( response.ok ) {
-//             response.json().then(function(data) {
-//                 displayRepos( data.items, language );
-//             })
-//         }
-//         else {
-//             alert( "Error: " + response.statusText );
-//         }
-//     });
-// }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Define the event handlers needed.
@@ -455,20 +391,19 @@ var formSubmitHandler = function( event ) {
     }
 }
 
-// The event handler for the language buttons
-// var buttonClickHandler = function( event ) {
+////////////////////////////////////////////////////////////////////////////////////////
+// The event handler for the cities in the display stack.  Each city name is 
+// a button that can be clicked.
 
-//     // Determine which button was clicked from the button data attributes
-//     var language = event.target.getAttribute( "data-language" );
+var buttonCityClickHandler = function( event ) {
+
+    // Determine which city button was clicked from the stack
+    var cityName = event.target.getAttribute( "previous" );
     
-//     // Invoke the API to return the requested language 'repos'
-//     getFeaturedRepos( language );
+    // Invoke the 'display city' routine to display the weather.
+    getCityWeather( cityName );
 
-//     // Clear out any earlier data.  The container is actually cleared before any new
-//     // data is displayed because 'getFeaturedRepos' runs asynchronously and will take
-//     // longer to finish.
-//     repoContainerEl.textContent = "";
-// }
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -477,12 +412,12 @@ var formSubmitHandler = function( event ) {
 // Event listener for the GitHub user name.
 userCitySearchEl.addEventListener( "submit", formSubmitHandler );
 
-// Event listener for the language buttons.
-//languageButtonsEl.addEventListener( "click", buttonClickHandler );
+// Event listener for the 'city' buttons in the 'stack'
+cityButtonsEl.addEventListener( "click", buttonCityClickHandler );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// When things start off, initialize the number of previously searched cities and try
-// to load data from local storage.
+// When things start off, initialize the number of previously searched cities and 
+// load data from local storage.
 
 retrieveCityList();
