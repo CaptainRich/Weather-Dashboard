@@ -30,6 +30,14 @@ var getCityWeather = function ( city ) {
     // Put the city name/date on the page
     displayCityNameDate( city, date );
 
+    // Break up the city name into its components so we can build the search string.
+    // var cityParts = city.split(",");
+    // var searchString = "{" + cityParts[0] + "}";  // we'll always have at least this much
+
+    // for( var i = 1; i < cityParts.length; i++ ) {
+    //     searchString = searchString + ",{" + cityParts[i] + "}";
+    // }
+
 
     // Personal API Key for 'openweather.com'
     var apiKey = "4ac62930f02efe4befd5f739a4de35e6";
@@ -71,7 +79,7 @@ var getCityWeather = function ( city ) {
         .catch(function (error) {
             // Notice this `.catch()` is chained onto the end of the `.then()` method
             alert("Unable to connect to OpenWeather");
-            return;
+            return( -1 );
         });
 
     // Format the 'Weather API URL to obtain the 5-day forecast.
@@ -381,13 +389,18 @@ var formSubmitHandler = function( event ) {
 
     // Get the requested user name from the form
     var searchCity = cityNameEl.value.trim();
+    var returnCode;
 
     if( searchCity ) {
-        getCityWeather( searchCity );
+        returnCode = getCityWeather( searchCity );
         cityNameEl.value = "";
     }
     else {
         alert( "Please enter a City name to search for." );
+    }
+
+    if( returnCode === -1 ) {
+        alert( "Invalid city name, please re-specify." );
     }
 }
 
