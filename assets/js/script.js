@@ -277,8 +277,11 @@ var pushCity = function( city ) {
 
     // We have a new city to add.  Push the list down, add the new city
     // and bump the counter.
-    for( j = 9; j > 0; j-- ) {
-        previousCities[j] = previousCities[j-1];
+    var maxIndex = Math.min(10, numPreviousCities);
+    if (maxIndex) {
+        for (var j = maxIndex; j > 0; j--) {
+            previousCities[j] = previousCities[j - 1];
+        }
     }
 
     previousCities[0] = localCity;
@@ -297,6 +300,10 @@ var updateCityList = function() {
 
     var idValue;
     var displayItem;
+
+    if( numPreviousCities == 0 ) {
+        return;
+    }
 
     // Loop over the number of cities and update the list on the page
     for( var i = 0; i < numPreviousCities; i++ ) {
@@ -326,6 +333,12 @@ var retrieveCityList = function() {
 
     // Retrieve the array of previously searched cities
     previousCities = localStorage.getItem( "citiesForecast" );
+
+    // Now put the data on the HTML page, if necessary.
+    if( numPreviousCities > 0 ) {
+        updateCityList();
+    }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -453,4 +466,4 @@ userCitySearchEl.addEventListener( "submit", formSubmitHandler );
 // When things start off, initialize the number of previously searched cities and try
 // to load data from local storage.
 
-numPreviousCities = 0;
+retrieveCityList();
