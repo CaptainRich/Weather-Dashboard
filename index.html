@@ -26,7 +26,7 @@
   <main class="flex-row justify-space-between">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3 ">
+        <div class="col-3 city-input">
           <!-- Create the page area for the 'city search' and 'city history' -->
           <div class="card">
             <h5 class="card-header">Search for a City<br>
@@ -43,7 +43,9 @@
   
           <!-- Setup the 'city history' area -->
           <div class="card row">
-            <h5 class="card-header">Previous City Searches</h5>
+            <h5 class="card-header">Previous City Searches<br>
+            <span class="h7">(Up to ten cities can be saved.)</span>
+          </h5>
           </div>
 
           <div id="previous-cities">
@@ -124,20 +126,20 @@
 
           <div class="row ">
             <div class="container ">
-              <div class="row ">
-                <div class="col-2 mr-1 card daycard">
+              <div class="row day-panels">
+                <div class="col-md-2 mr-1 card daycard">
                   <ul id="day1"></ul>
                 </div>
-                <div class="col-2 mr-1 card daycard">
+                <div class="col-md-2 mr-1 card daycard">
                   <ul id="day2"></ul>
                 </div>
-                <div class="col-2 mr-1 card daycard">
+                <div class="col-md-2 mr-1 card daycard">
                   <ul id="day3"></ul>
                 </div>
-                <div class="col-2 mr-1 card daycard">
+                <div class="col-md-2 mr-1 card daycard">
                   <ul id="day4"></ul>
                 </div>
-                <div class="col-2 mr-1 card daycard">
+                <div class="col-md-2 mr-1 card daycard">
                   <ul id="day5"></ul>
                 </div>
               </div>
