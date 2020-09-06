@@ -45,13 +45,13 @@ The deployment link to display the updated web page is:
 6) A {Clear} button is available to blank out the stack as well as local storage.
 7) Reducing the width of the browser window will resize the panels and search box.  In its smallest form, the 5-day forecast panels are displayed on top of each other.
 8) For the selected/specified city:
-* Alerts are implemented to notify the user if the specified city is not found - no data is saved in this instance.
-* The weather for the current day is obtained (from the API) and displayed.
-* The latitude and longitude from this 'API request' is used to implement an additional 'API endpoint' to obtain the 5-day forecast.
-* The 5-day forecast is displayed in panels, below the weather details for the current day.
-* Each date displayed is followed by the associated 'day of the week'.
+   * Alerts are implemented to notify the user if the specified city is not found - no data is saved in this instance.
+   * The weather for the current day is obtained (from the API) and displayed.
+   * The latitude and longitude from this 'API request' is used to implement an additional 'API endpoint' to obtain the 5-day forecast.
+   * The 5-day forecast is displayed in panels, below the weather details for the current day.
+   * Each date displayed is followed by the associated 'day of the week'.
 
-** OpenWeatherAPI Issue **
+**OpenWeatherAPI Issue**
 According to the OpenWeather API documentation, city locations can be specified in one of three formats:
 1) City
 2) City,State
