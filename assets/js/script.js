@@ -6,6 +6,7 @@ var cityNameEl = document.querySelector( "#cityname" );
 
 // Variable for the click handler on city name stack.
 var cityButtonsEl = document.querySelector( "#previous-cities" );
+var clearButtonEl = document.querySelector( "#clear-all" );
 
 // Variables for the daily weather and display information
 var curDay;
@@ -422,6 +423,34 @@ var buttonCityClickHandler = function( event ) {
 }
 
 
+/////////////// ** Event Handler ** //////////////////////////////////////////
+// The event handler for the clear button.  This will empty local browser storage
+// as well as the display stack.
+
+var buttonClearStackHandler = function () {
+
+    // Remove all the "city" entries.
+    if (numPreviousCities > 0) {
+        var key;
+        for (var i = 0; i < numPreviousCities; i++) {
+            key = "citiesForecast" + i;
+            localStorage.removeItem(key);
+        }
+    }
+
+    // Remove the city names from the page
+    // Loop over the number of cities and blank the HTML Element
+    for (var i = 0; i < numPreviousCities; i++) {
+        idValue = "p" + i;
+        displayItem = document.getElementById(idValue);
+        displayItem.innerHTML = " ";
+    }
+
+    // Now remove the count.
+    localStorage.removeItem("cityCount");
+    numPreviousCities = 0;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // Define the event listeners needed.
 
@@ -430,6 +459,9 @@ userCitySearchEl.addEventListener( "submit", formSubmitHandler );
 
 // Event listener for the 'city' buttons in the 'stack'
 cityButtonsEl.addEventListener( "click", buttonCityClickHandler );
+
+// Event listener for the "clear" button, to empty local storage
+clearButtonEl.addEventListener( "click", buttonClearStackHandler );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
