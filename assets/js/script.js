@@ -8,6 +8,7 @@ var cityNameEl = document.querySelector( "#cityname" );
 var cityButtonsEl = document.querySelector( "#previous-cities" );
 
 // Variables for the daily weather and display information
+var curDay;
 var weatherTemperature;
 var weatherHumidity;
 var weatherWindSpeed;
@@ -25,6 +26,7 @@ var getCityWeather = function ( city ) {
 
     // Get the current date
     var date = moment().format('L');
+    curDay = moment().format("dddd");
 
  
     // Personal API Key for 'openweather.com'
@@ -103,7 +105,7 @@ var displayCityNameDate = function( city, date ) {
     // Format the data we need from the response
     var cityInfo = city.split(",");
     var cityDisplayNameEl = document.querySelector( "#citytext" );
-    cityDisplayNameEl.textContent = cityInfo[0] + ", " + date;
+    cityDisplayNameEl.textContent = cityInfo[0] + ", " + date + ", " + curDay;
     var cityLocationNameEl = document.querySelector( "#citylocation" );
 
     // If the 3rd part of the location wasn't specified, set it to a blank.
@@ -213,9 +215,13 @@ var showDayInfo = function( ulId, data, weatherIndex ) {
     // Display the date
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[weatherIndex].dt_txt.split(" ");
+
+    // From the date, obtain the day of the week;
+    dayOfWeek = moment(dateDisplay2[0]).format('dddd');
+
     // Put the date in usual 'US' format
     usDate = dateDisplay2[0].split("-");
-    showDate = usDate[1] + "-" + usDate[2] + "-" + usDate[0];
+    showDate = usDate[1] + "-" + usDate[2] + "-" + usDate[0] + ", " + dayOfWeek;
     genericLi.textContent = showDate;
     dateDisplay1.appendChild(genericLi);
 

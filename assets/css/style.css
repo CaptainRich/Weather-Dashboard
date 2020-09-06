@@ -12,12 +12,20 @@ body {
   align-items: flex-end;
 }
 
-.day-panels {
-  display: flex;
-  flex-flow: row wrap;
+.next5Days {
+  align-items: center;
+  margin-bottom: 5px;
+  min-height: 85%;
 }
 
-.day-card {
+.day-panels {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 5px 0 5px 0;
+}
+
+.day-card { 
   display: flex;
   flex-wrap: wrap;
 }
