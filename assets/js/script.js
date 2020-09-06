@@ -9,6 +9,7 @@ var cityButtonsEl = document.querySelector( "#previous-cities" );
 var clearButtonEl = document.querySelector( "#clear-all" );
 
 // Variables for the daily weather and display information
+var returnValue;
 var curDay;
 var weatherTemperature;
 var weatherHumidity;
@@ -24,6 +25,8 @@ var previousCities = [10];
 
 ////////////////////////////////////////////////////////////////////////////////////////
 var getCityWeather = function ( city ) {
+
+    returnValue = 0;
 
     // Get the current date
     var date = moment().format('L');
@@ -47,6 +50,12 @@ var getCityWeather = function ( city ) {
             return response.json();
         })
         .then(function (response) {
+
+            // Verify a city was found
+            if( response.cod == 404 ) {
+                returnValue = -1;
+                return( returnValue );
+            }
  
             // Put the city name/date on the page, then the day's weather
             displayCityNameDate( city, date );
@@ -71,8 +80,13 @@ var getCityWeather = function ( city ) {
         .catch(function (error) {
             // Notice this `.catch()` is chained onto the end of the `.then()` method
             alert("Unable to connect to OpenWeather");
-            return( -1 );
+            returnValue = -1;
+            return( returnValue );
         });
+
+    if( returnValue < 0 ) {
+        return( returnValue );
+    }
 
     // Format the 'Weather API URL to obtain the 5-day forecast.
     var apiUrl2 = "https://api.openweathermap.org/data/2.5/forecast/?q=" + city + "&units=imperial&appid=" +apiKey;
@@ -396,14 +410,14 @@ var formSubmitHandler = function( event ) {
     var returnCode;
 
     if( searchCity ) {
-        returnCode = getCityWeather( searchCity );
+        getCityWeather( searchCity );
         cityNameEl.value = "";
     }
     else {
         alert( "Please enter a City name to search for." );
     }
 
-    if( returnCode === -1 ) {
+    if( returnValue < 0 ) {
         alert( "Invalid city name, please re-specify." );
     }
 }
