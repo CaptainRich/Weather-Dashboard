@@ -1,12 +1,13 @@
 // Javascript file for the Weather Dashboard
+// Richard Ay, Sept 2020
 
 // Variables for the user input form.
 var userCitySearchEl  = document.querySelector( "#city-form" );
-var cityNameEl = document.querySelector( "#cityname" );
+var cityNameEl        = document.querySelector( "#cityname" );
 
 // Variable for the click handler on city name stack.
-var cityButtonsEl = document.querySelector( "#previous-cities" );
-var clearButtonEl = document.querySelector( "#clear-all" );
+var cityButtonsEl     = document.querySelector( "#previous-cities" );
+var clearButtonEl     = document.querySelector( "#clear-all" );
 
 // Variables for the daily weather and display information
 var returnValue;
@@ -30,7 +31,7 @@ var getCityWeather = function ( city ) {
 
     // Get the current date
     var date = moment().format('L');
-    curDay = moment().format("dddd");
+    curDay   = moment().format("dddd");
 
  
     // Personal API Key for 'openweather.com'
@@ -38,8 +39,6 @@ var getCityWeather = function ( city ) {
 
     // Format the 'Weather' API URL to obtain the current day's forecast.
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + apiKey;
-
-
 
 
  
@@ -64,7 +63,7 @@ var getCityWeather = function ( city ) {
             cityLat = response.coord.lat;  // need to set these here because of the asynchronous nature of 'fetch'
             cityLon = response.coord.lon;
 
-            // since the above request worked, use the lat/long values to obtain the 'UV index'.
+            // Since the above request worked, use the lat/long values to obtain the 'UV index'.
             // Format the 'UV' API URL.
             var apiUrl = "https://api.openweathermap.org/data/2.5/uvi/forecast?appid=" + apiKey + "&lat=" + cityLat + "&lon=" + cityLon + "&cnt=1";
 
@@ -151,17 +150,24 @@ var displayCityNameDate = function( city, date ) {
 ////////////////////////////////////////////////////////////////////////////////////////
 // Function to put "today's" weather on the page
 var displayToday = function( data ) {
+
+    console.log( data );
     
 
     // Get the data we want from the JSON object.
     weatherTemperature = data.main.temp;
     weatherHumidity    = data.main.humidity;
     weatherWindSpeed   = data.wind.speed;
+    weatherFeelsLike   = data.main.feels_like;
 
     // Put the data for today's weather on the page.
     var tempDisplayEl = document.querySelector("#temperature");
     var weatherString = "Temperature: " + weatherTemperature + " \xB0F";                 
     tempDisplayEl.textContent = weatherString;
+
+    var feelsLikeDisplayEl = document.querySelector("#feelslike");
+    var feelsLikeString = "Feels Like: " + weatherFeelsLike + " \xB0F";                 
+    feelsLikeDisplayEl.textContent = feelsLikeString;
 
     var humidDisplayEl = document.querySelector("#humidity");
     humidDisplayEl.textContent = "Humidity: " + weatherHumidity + " %";
@@ -189,6 +195,8 @@ var displayUvValue = function( data2 ) {
 // Function to display the weather for the next 5 days.
 var display5Days = function( data ) {
 
+    console.log( data );
+
     // There could already be a forecast on the page, this needs to be removed
     // before we append the current city's forecast.
 
@@ -196,13 +204,13 @@ var display5Days = function( data ) {
 
     // "data" is a list of 40 items, the weather for 5 days every 3 hours.
     // Display the weather information at noon each day, "list" locations
-    // 2, 10, 18, 26, and 34.
+    // 4, 12, 20, 28, and 36.
 
-    showDayInfo( "#day1", data, 2 )    // display 1st day, pass in ID and weather index
-    showDayInfo( "#day2", data, 10 )   // display 2nd day, pass in ID and weather index
-    showDayInfo( "#day3", data, 18 )   // display 3rd day, pass in ID and weather index
-    showDayInfo( "#day4", data, 26 )   // display 4th day, pass in ID and weather index
-    showDayInfo( "#day5", data, 34 )   // display 5th day, pass in ID and weather index
+    showDayInfo( "#day1", data, 4 )    // display 1st day, pass in ID and weather index
+    showDayInfo( "#day2", data, 12 )   // display 2nd day, pass in ID and weather index
+    showDayInfo( "#day3", data, 20 )   // display 3rd day, pass in ID and weather index
+    showDayInfo( "#day4", data, 28 )   // display 4th day, pass in ID and weather index
+    showDayInfo( "#day5", data, 36 )   // display 5th day, pass in ID and weather index
 
 }
 
@@ -254,17 +262,29 @@ var showDayInfo = function( ulId, data, weatherIndex ) {
     dateDisplay2 = data.list[weatherIndex].weather[0].description;
     genericLi.textContent = "Looks like: " + dateDisplay2;
     dateDisplay1.appendChild(genericLi);
+    
+    // Display the predicted wind speed
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[weatherIndex].wind.speed;
+    genericLi.textContent = "Wind Speed: " + dateDisplay2 + " mph";
+    dateDisplay1.appendChild(genericLi);
 
     // Display the temperature
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[weatherIndex].main.temp;
     genericLi.textContent = "Temperature: " + dateDisplay2 + " \xB0F";
     dateDisplay1.appendChild(genericLi);
+    
+    // Display the "feels like" temperature
+    genericLi = document.createElement("li");
+    dateDisplay2 = data.list[weatherIndex].main.feels_like;
+    genericLi.textContent = "Feels Like: " + dateDisplay2 + " \xB0F";
+    dateDisplay1.appendChild(genericLi);
 
     // Display the humidity
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[weatherIndex].main.humidity;
-    genericLi.textContent = "Humidity: " + dateDisplay2;
+    genericLi.textContent = "Humidity: " + dateDisplay2 + " %";
     dateDisplay1.appendChild(genericLi);
 
 }
@@ -407,7 +427,6 @@ var formSubmitHandler = function( event ) {
 
     // Get the requested user name from the form
     var searchCity = cityNameEl.value.trim();
-    var returnCode;
 
     if( searchCity ) {
         getCityWeather( searchCity );

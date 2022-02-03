@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="./assets/css/style.css" />
   <title>Weather Dashboard</title>
 
-      <!--  Add a "favicon" image to the Browser title tab.  -->
-      <link rel="icon" href="./assets/images/weather1.png"/>
+  <!--  Add a "favicon" image to the Browser title tab.  -->
+  <link rel="icon" href="./assets/images/weather1.png"/>
 </head>
 
 <body class="flex-column min-100-vh">
@@ -34,7 +34,8 @@
             </h5>
   
             <form id="city-form" class="card-body">
-              <input name="cityname" id="cityname" type="text" autofocus="true" class="form-input" />
+              <input name="cityname" id="cityname" type="text" autofocus="true" class="form-input" 
+                     placeholder="City, State, Country"/>
               <button type="submit" class="btn">
                 <img src="./assets/images/search.png" height="35"></img>
               </button>
@@ -42,7 +43,7 @@
           </div>
   
           <!-- Setup the 'city history' area -->
-          <div class="card row">
+          <div class="card ">
             <h5 class="card-header">Previous City Searches<br>
             <span class="h7">(Up to ten cities can be saved.)</span>
             <button type="button" class="btn btn-primary" id="clear-all"> Clear 
@@ -54,34 +55,34 @@
           <div id="previous-cities">
             <!-- Space for up to 10 cities -->
             <div class="row">
-              <p class="previous btn" id="p0"></p>
+              <p class="previous btn btn-primary" id="p0"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p1"></p>
+              <p class="previous btn btn-primary" id="p1"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p2"></p>
+              <p class="previous btn btn-primary" id="p2"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p3"></p>
+              <p class="previous btn btn-primary" id="p3"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p4"></p>
+              <p class="previous btn btn-primary" id="p4"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p5"></p>
+              <p class="previous btn btn-primary" id="p5"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p6"></p>
+              <p class="previous btn btn-primary" id="p6"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p7"></p>
+              <p class="previous btn btn-primary" id="p7"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p8"></p>
+              <p class="previous btn btn-primary" id="p8"></p>
             </div>
             <div class="row">
-              <p class="previous btn" id="p9"></p>
+              <p class="previous btn btn-primary" id="p9"></p>
             </div>
           </div>
         </div>
@@ -108,6 +109,10 @@
             </div>
             
             <div class="row today">
+              <p class="local3" id="feelslike"></p>
+            </div>
+            
+            <div class="row today">
               <p class="local3" id="humidity"></p>
             </div>
 
@@ -121,7 +126,7 @@
             </div>
   
 
-          <!-- Setup the area for the next 5 days weather -->
+          <!-- Setup the weather area for the next 5 days -->
           <div class="row">
             <!-- Area for the 5-day forecast here-->
             <h5 class="forecast">5-Day Forecast:</h5>

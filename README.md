@@ -1,12 +1,13 @@
 # Weather Dashboard Project
 
-Richard Ay, August/September 2020
+Richard Ay, (August/September 2020, *updated February 2022*)
 
 ## Table of Contents
 * [Project Objective](#project-objective)
 * [Acceptance Criteria](#acceptance-criteria)
 * [Deployment Link](#deployment-link)
 * [Weather Dashboard Logic](#weather-dashboard-logic)
+* [Technologies Used](#technologies-used)
 * [Application Screen Shot](#application-screen-shot)
 
 
@@ -46,7 +47,7 @@ The deployment link to display the updated web page is:
 7) Reducing the width of the browser window will resize the panels and search box.  In its smallest form, the 5-day forecast panels are displayed on top of each other.
 8) For the selected/specified city:
    * Alerts are implemented to notify the user if the specified city is not found - no data is saved in this instance.
-   * The weather for the current day is obtained (from the API) and displayed.
+   * The weather (for the selected city) for the current day is obtained (from the API) and displayed.
    * The latitude and longitude from this 'API request' is used to implement an additional 'API endpoint' to obtain the 5-day forecast.
    * The 5-day forecast is displayed in panels, below the weather details for the current day.
    * Each date displayed is followed by the associated 'day of the week'.
@@ -64,6 +65,15 @@ The following observations have been made in implementing this API.
 4) Specifying 'Houston,Texas' does work as documented.
 
 This behavior was confirmed in _'Postman'_.
+
+
+## Technologies Used
+
+* Bootstrap
+* Google fonts
+* Moment.js
+* Font-Awesome icons
+* Local browser storage
 
 
 ## Application Screen Shot

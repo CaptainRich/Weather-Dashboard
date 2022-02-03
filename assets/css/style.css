@@ -4,6 +4,7 @@
 /* Implement the custom Google Styles */
 body {
   font-family: "Staatliches", "Open Sans", sans-serif;
+  background-color: rgb(231, 222, 205);      
 }
 
 .flex-row {
@@ -146,7 +147,7 @@ ul.list-group {
 }
 
 .btn:hover {
-  background: #eeeeee;
+  background: #440ddb;
 }
 
 
