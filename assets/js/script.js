@@ -203,14 +203,14 @@ var display5Days = function( data ) {
     empty5Days();
 
     // "data" is a list of 40 items, the weather for 5 days every 3 hours.
-    // Display the weather information at noon each day, "list" locations
-    // 4, 12, 20, 28, and 36.
+    // Display the weather information at 9am and noon each day, "list" locations for 9am are
+    // 3, 11, 19, 27, and 35.  Locations for noon are +1 past these values.
 
-    showDayInfo( "#day1", data, 4 )    // display 1st day, pass in ID and weather index
-    showDayInfo( "#day2", data, 12 )   // display 2nd day, pass in ID and weather index
-    showDayInfo( "#day3", data, 20 )   // display 3rd day, pass in ID and weather index
-    showDayInfo( "#day4", data, 28 )   // display 4th day, pass in ID and weather index
-    showDayInfo( "#day5", data, 36 )   // display 5th day, pass in ID and weather index
+    showDayInfo( "#day1", data, 3 )    // display 1st day, pass in ID and weather index
+    showDayInfo( "#day2", data, 11 )   // display 2nd day, pass in ID and weather index
+    showDayInfo( "#day3", data, 19 )   // display 3rd day, pass in ID and weather index
+    showDayInfo( "#day4", data, 27 )   // display 4th day, pass in ID and weather index
+    showDayInfo( "#day5", data, 35 )   // display 5th day, pass in ID and weather index
 
 }
 
@@ -224,6 +224,7 @@ var showDayInfo = function( ulId, data, weatherIndex ) {
     // Generic display elements
     var dateDisplay1;
     var dateDisplay2;
+    var dateDisplay3;
     var imgDisplay;
     var iconDisplayUrl = "http://openweathermap.org/img/wn/";
     var iconDisplay;
@@ -265,26 +266,30 @@ var showDayInfo = function( ulId, data, weatherIndex ) {
     
     // Display the predicted wind speed
     genericLi = document.createElement("li");
-    dateDisplay2 = data.list[weatherIndex].wind.speed;
-    genericLi.textContent = "Wind Speed: " + dateDisplay2 + " mph";
+    dateDisplay2 = data.list[weatherIndex].wind.speed;     // 9am
+    dateDisplay3 = data.list[weatherIndex+1].wind.speed;   // noon
+    genericLi.textContent = "Wind (mph): " + dateDisplay2 + ", " + dateDisplay3;
     dateDisplay1.appendChild(genericLi);
 
     // Display the temperature
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[weatherIndex].main.temp;
-    genericLi.textContent = "Temperature: " + dateDisplay2 + " \xB0F";
+    dateDisplay3 = data.list[weatherIndex+1].main.temp;
+    genericLi.textContent = "Temp (\xB0F): " + dateDisplay2 + ", " + dateDisplay3;
     dateDisplay1.appendChild(genericLi);
     
     // Display the "feels like" temperature
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[weatherIndex].main.feels_like;
-    genericLi.textContent = "Feels Like: " + dateDisplay2 + " \xB0F";
+    dateDisplay3 = data.list[weatherIndex+1].main.feels_like;
+    genericLi.textContent = "Feels Like (\xB0F): " + dateDisplay2 + ", " + dateDisplay3;
     dateDisplay1.appendChild(genericLi);
 
     // Display the humidity
     genericLi = document.createElement("li");
     dateDisplay2 = data.list[weatherIndex].main.humidity;
-    genericLi.textContent = "Humidity: " + dateDisplay2 + " %";
+    dateDisplay3 = data.list[weatherIndex+1].main.humidity;
+    genericLi.textContent = "Humidity (%): " + dateDisplay2 + " , " + dateDisplay3;
     dateDisplay1.appendChild(genericLi);
 
 }
