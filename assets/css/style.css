@@ -4,7 +4,25 @@
 /* Implement the custom Google Styles */
 body {
   font-family: "Staatliches", "Open Sans", sans-serif;
-  background-color: rgb(231, 222, 205);      
+  background-color: rgb(231, 222, 205);   
+}
+
+/* This class works together with the "footer" class to keep the footer
+   at the bottom of the viewport, regardless of resizing. */
+.wrapper {
+  min-height: calc(100vh - 50px);  /* Note the '50px' matches the footer. */
+}
+
+
+.footer {
+  width: 100%;
+  background: blue;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  border-top: 5px solid rgb(105, 105, 204);
+  margin-top: 10px;            /* added to avoid touching the footer area */
+  height: 50px;                /* 50px matches wrapper deduction */
 }
 
 .flex-row {
